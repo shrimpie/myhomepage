@@ -1,4 +1,3 @@
-# myhomepage
 ## My home page.
 
 A place to show what I can do.
@@ -17,6 +16,9 @@ A place to show what I can do.
 * Nunjucks (template)
 * Gulp.js (automation)
 * Jasmine (testing)
+* Bootstrap (css)
 * ..
 
 Above lists are to be updated whenever I come up with something interesting.
+
+PS: This thing will be finally deployed to Heroku.

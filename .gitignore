@@ -1,0 +1,14 @@
+# Dependency directories
+node_modules/
+
+# angular dependencies
+*/node_modules
+
+# temporarily unselect this folder
+angular-src
+
+# dotenv environment variables file
+.env
+
+# OS related
+.DS_Storegit r
