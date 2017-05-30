@@ -17,13 +17,18 @@ import { AuthService } from './services/auth.service';
 import { FlashMessagesModule } from 'angular2-flash-messages';
 
 import { AuthGuard } from './guards/auth.guard';
+import { BlogCenterComponent } from './components/blogs/blog-center/blog-center.component';
+import { BlogListComponent } from './components/blogs/blog-list/blog-list.component';
+import { BlogDetailComponent } from './components/blogs/blog-detail/blog-detail.component';
+
 
 const appRoutes: Routes =  [
   { path:'', component: HomeComponent },
   { path:'register', component: RegisterComponent },
   { path:'login', component: LoginComponent },
   { path:'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
-  { path:'profile', component: ProfileComponent, canActivate: [AuthGuard] }
+  { path:'profile', component: ProfileComponent, canActivate: [AuthGuard] },
+  { path:'blogapi/blogs', component: BlogCenterComponent, canActivate: [AuthGuard] }
 ]
 
 @NgModule({
@@ -38,7 +43,10 @@ const appRoutes: Routes =  [
     RegisterComponent,
     HomeComponent,
     DashboardComponent,
-    ProfileComponent
+    ProfileComponent,
+    BlogCenterComponent,
+    BlogListComponent,
+    BlogDetailComponent
   ],
   // imports makes the exported declarations of other modules available in the
   // current module

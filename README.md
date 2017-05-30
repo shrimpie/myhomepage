@@ -3,7 +3,7 @@
 A place to show what I can do.
 
 1. Items I want to present
-* Microblog
+* Blog
 * Little projects
 * Usefull notes
 * ..
@@ -13,8 +13,6 @@ A place to show what I can do.
 * Express.js (routing)
 * Angular2 (frontend)
 * MongoDB (database)
-* Nunjucks (template)
-* Gulp.js (automation)
 * Jasmine (testing)
 * Bootstrap (css)
 * ..
