@@ -16,13 +16,11 @@ export class BlogService {
   constructor(private _http : Http) { }
 
   getBlogs(author:string) {
-    console.log('2. author: ', author);
+    // console.log('2. author: ', author);
     let params: URLSearchParams = new URLSearchParams();
     params.set('author', author);
-    console.log('params: ', params);
-
-    // let requestOptions = new RequestOptions();
-    // requestOptions.search = params;
+    // console.log('params: ', params);
+    
     return this._http.get(this._getUrl, {
       search: params
     }).map((res: Response) => res.json());

@@ -59,7 +59,7 @@ export class BlogDetailComponent implements OnInit {
 
   deleteBlog() {
     if(confirm("Are you sure to delete this blog?")) {
-      console.log("This blog is about to be deleted");
+      // console.log("This blog is about to be deleted");
       this.deleteBlogEvent.emit(this.blog);
     }
   }

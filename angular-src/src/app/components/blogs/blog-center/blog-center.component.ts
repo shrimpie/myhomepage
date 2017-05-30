@@ -24,7 +24,7 @@ export class BlogCenterComponent implements OnInit {
     // I don't want to add a form item of username, since it's not reasonable to
     // have one.
     this.username = JSON.parse(localStorage.getItem('user'))['username'];
-    console.log('1. username: ', this.username);
+    // console.log('1. username: ', this.username);
 
     this._blogService
         .getBlogs(this.username)
