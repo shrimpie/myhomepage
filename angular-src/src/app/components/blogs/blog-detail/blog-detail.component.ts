@@ -34,18 +34,34 @@ export class BlogDetailComponent implements OnInit {
     this.editContent = true;
   }
 
-  onUrlClick() {
+  onEditUrlClick() {
     this.editFeaturedImgUrl = true;
   }
 
+  onCancelEditUrlClick() {
+    this.editFeaturedImgUrl = false;
+  }
+
+  onCancelEditTitleClick() {
+    this.editTitle = false;
+  }
+
+  onCancelContentClick() {
+    this.editContent = false;
+  }
 
   updateBlog() {
     this.updateBlogEvent.emit(this.blog);
+    this.editFeaturedImgUrl = false;
+    this.editTitle = false;
+    this.editContent = false;
   }
 
-  deleteVideo() {
-    this.deleteBlogEvent.emit(this.blog);
+  deleteBlog() {
+    if(confirm("Are you sure to delete this blog?")) {
+      console.log("This blog is about to be deleted");
+      this.deleteBlogEvent.emit(this.blog);
+    }
   }
-
 
 }

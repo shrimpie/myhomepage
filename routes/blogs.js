@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const url = require('url');
 
 const mongoose = require('mongoose');
 const Blog = require('../models/blog');
@@ -9,9 +10,12 @@ mongoose.Promise = global.Promise;
 
 router.get('/blogs', (req, res) => {
   console.log('Get request for all blogs');
-  console.log('req.body: ', req.body);
+  // console.log('req.body: ', req);
 
-  Blog.find({})
+  var queryData = url.parse(req.url, true).query;
+  console.log('3. queryData: ', queryData);
+
+  Blog.find({ 'author': queryData.author })
        .exec(function(err, blogs){
          if(err) {
            console.log('Error retrieving blogs');

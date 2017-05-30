@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
+import { URLSearchParams } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Blog } from "../models/blog";
 
@@ -14,9 +15,17 @@ export class BlogService {
 
   constructor(private _http : Http) { }
 
-  getBlogs() {
-    return this._http.get(this._getUrl)
-                     .map((res: Response) => res.json());
+  getBlogs(author:string) {
+    console.log('2. author: ', author);
+    let params: URLSearchParams = new URLSearchParams();
+    params.set('author', author);
+    console.log('params: ', params);
+
+    // let requestOptions = new RequestOptions();
+    // requestOptions.search = params;
+    return this._http.get(this._getUrl, {
+      search: params
+    }).map((res: Response) => res.json());
   }
 
   addBlog(blog : Blog) {

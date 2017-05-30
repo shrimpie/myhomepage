@@ -1,44 +1,66 @@
 <div>
   <form>
 
-    <div class="featuredImg">
-      <img [src]="blog.featuredImgUrl" alt="featured image" width="auto"
-           height="300px">
-      <script async src="//embedr.flickr.com/assets/client-code.js"
-              charset="utf-8">
-      </script>
-    </div>
-
-    <button *ngIf="!editFeaturedImgUrl" class="btn btn-sm btn-primary"
-            (click)="onUrlClick()">
-        Edit Image Url
-    </button>
-
-    <div *ngIf="editTitle" class="form-group">
-      <input type="input" class="form-control" name="title" required
-             placeholder="title" [(ngModel)]="blog.title">
-    </div>
-    <h3 *ngIf="!editTitle" (click)="onTitleClick()">
-      {{ blog.title }}
-    </h3>
-    <h4><small>at {{ blog.createdAt | date:'medium'}}</small></h4>
-
+    <!-- Featured Image -->
+    <img class="featuredImg" [src]="blog.featuredImgUrl" alt="featured image"
+         width="auto" height="300px" (click)="onEditUrlClick()">
     <div *ngIf="editFeaturedImgUrl" class="form-group">
       <input type="input" class="form-control" name="featuredImgUrl" required
              placeholder="url" [(ngModel)]="blog.featuredImgUrl">
     </div>
+    <button *ngIf="editFeaturedImgUrl" class="btn btn-sm btn-warning"
+            (click)="onCancelEditUrlClick()">Cancel Update Image Url
+    </button>
+    <button *ngIf="editFeaturedImgUrl" type="button" (click)="updateBlog()"
+            class="btn btn-sm btn-primary" [disabled]="!editFeaturedImgUrl">
+      Save
+    </button>
+    <hr />
 
+
+    <!-- Title -->
+    <h3 *ngIf="!editTitle" (click)="onTitleClick()">{{ blog.title }}</h3>
+    <div *ngIf="editTitle" class="form-group">
+      <input type="input" class="form-control" name="title" required
+             placeholder="title" [(ngModel)]="blog.title">
+    </div>
+    <button *ngIf="editTitle" class="btn btn-sm btn-warning"
+            (click)="onCancelEditTitleClick()">Cancel Edit Title
+    </button>
+    <button *ngIf="editTitle" type="button" (click)="updateBlog()"
+            class="btn btn-sm btn-primary" [disabled]="!editTitle">
+      Save
+    </button>
+
+    <h4><small>at {{ blog.createdAt | date:'medium'}}</small></h4>
+    <hr />
+
+    <!-- Content -->
     <div *ngIf="editContent" class="form-group">
       <textarea class="form-control" rows="5" name="content"
                 [(ngModel)]="blog.content">
       </textarea>
     </div>
-    <p *ngIf="!editContent" (click)="onContentClick()">{{ blog.content }}</p>
-
-    <button type="button" (click)="updateBlog()" class="btn btn-primary">
-      Update
+    <button *ngIf="editContent" class="btn btn-sm btn-warning"
+            (click)="onCancelContentClick()">Cancel Edit Content
     </button>
-    <button type="button" (click)="deleteBlog()" class="btn btn-danger">
+    <button *ngIf="editContent" type="button" (click)="updateBlog()"
+            class="btn btn-sm btn-primary" [disabled]="!editContent">
+      Save
+    </button>
+    <p class="content" *ngIf="!editContent" (click)="onContentClick()">
+      {{ blog.content }}
+    </p>
+    <hr />
+
+    <!-- Edit buttons -->
+    <button type="button" (click)="updateBlog()" class="btn btn-sm btn-primary"
+            [disabled]="!editTitle && !editContent && !editFeaturedImgUrl">
+      Save
+    </button>
+
+    <button type="button" (click)="deleteBlog()"
+            class="btn btn-sm btn-danger pull-right">
       Delete
     </button>
   </form>

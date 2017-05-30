@@ -24,10 +24,10 @@ export class BlogCenterComponent implements OnInit {
     // I don't want to add a form item of username, since it's not reasonable to
     // have one.
     this.username = JSON.parse(localStorage.getItem('user'))['username'];
-    console.log('username: ', this.username);
+    console.log('1. username: ', this.username);
 
     this._blogService
-        .getBlogs()
+        .getBlogs(this.username)
         .subscribe(resBlogData => {
           console.log('resBlogData: ', resBlogData);
           this.blogs = resBlogData;
@@ -63,8 +63,10 @@ export class BlogCenterComponent implements OnInit {
     console.log('update blog: ', blog);
     this._blogService
         .updateBlog(blog)
-        .subscribe(resUpdatedBlog => blog = resUpdatedBlog);
-    this.selectedBlog = null;
+        .subscribe(resUpdatedBlog => {
+          blog = resUpdatedBlog
+          this.selectedBlog = resUpdatedBlog;
+        });
   }
 
   onDeleteBlogEvent(blog : Blog) {
@@ -78,9 +80,8 @@ export class BlogCenterComponent implements OnInit {
             }
           }
         });
-    this.selectedBlog = null;
+    this.selectedBlog = this.blogs.length ? this.blogs[0] : null;
   }
-
 
   newBlog() {
     this.hideNewBlog = false;
