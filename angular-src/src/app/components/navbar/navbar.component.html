@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default navbar-static-top">
+<nav class="navbar navbar-inverse navbar-static-top">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed"
@@ -42,6 +42,13 @@
               <a [routerLink]="['/blogapi/blogs']">
                 <span class="glyphicon glyphicon-th-list"></span>
                 &nbsp;Blogs
+              </a>
+            </li>
+            <li *ngIf="authService.loggedIn()" [routerLinkActive]="['active']"
+              [routerLinkActiveOptions]="{exact:true}">
+              <a [routerLink]="['/chat']">
+                <span class="glyphicon glyphicon-modal-window"></span>
+                &nbsp;Chat
               </a>
             </li>
             <li *ngIf="!authService.loggedIn()" [routerLinkActive]="['active']"

@@ -54,3 +54,21 @@ app.get('*', function(req, res) {
 app.listen(port, () => {
   console.log('Server running on port ' + port);
 });
+
+
+let http = require('http').Server(app);
+let io = require('socket.io')(http);
+
+io.on('connection', (socket) => {
+  console.log('A user is connected');
+  socket.on('disconnect', function(){
+    console.log('The user is disconnected');
+  });
+  socket.on('add-message', (message) => {
+    console.log('message received at server', message);
+    io.emit('message', { type:'new-message', msg: message });
+  });
+});
+http.listen(5000, () => {
+  console.log('socket.io started on port 5000');
+});

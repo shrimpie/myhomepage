@@ -1,0 +1,11 @@
+<div id="messages">
+
+  <h4>Messages</h4>
+  <hr />
+
+  <ul *ngFor="let message of messages">
+    <li><b>{{ message.from_author }}</b> : {{ message.content }}</li>
+    <hr />
+  </ul>
+
+</div>

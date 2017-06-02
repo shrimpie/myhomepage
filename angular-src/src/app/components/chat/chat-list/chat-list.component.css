@@ -1,0 +1,19 @@
+#messages {
+    border: 1px solid #eee;
+    border-radius: 5px;
+    bottom: 50px;
+    left: 0;
+    right: 0;
+    height: 70vh;
+    overflow: auto;
+    margin-bottom: 5px;
+}
+
+#messages h4 {
+  margin-left: 20px;
+  margin-bottom: -5px;
+}
+
+#messages ul {
+  list-style-type: none;
+}

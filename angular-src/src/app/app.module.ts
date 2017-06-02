@@ -20,6 +20,10 @@ import { AuthGuard } from './guards/auth.guard';
 import { BlogCenterComponent } from './components/blogs/blog-center/blog-center.component';
 import { BlogListComponent } from './components/blogs/blog-list/blog-list.component';
 import { BlogDetailComponent } from './components/blogs/blog-detail/blog-detail.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { ChatComponent } from './components/chat/chat/chat.component';
+import { ChatInputComponent } from './components/chat/chat-input/chat-input.component';
+import { ChatListComponent } from './components/chat/chat-list/chat-list.component';
 
 
 const appRoutes: Routes =  [
@@ -28,7 +32,8 @@ const appRoutes: Routes =  [
   { path:'login', component: LoginComponent },
   { path:'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   { path:'profile', component: ProfileComponent, canActivate: [AuthGuard] },
-  { path:'blogapi/blogs', component: BlogCenterComponent, canActivate: [AuthGuard] }
+  { path:'blogapi/blogs', component: BlogCenterComponent, canActivate: [AuthGuard] },
+  { path:'chat', component: ChatComponent, canActivate: [AuthGuard] }
 ]
 
 @NgModule({
@@ -46,7 +51,11 @@ const appRoutes: Routes =  [
     ProfileComponent,
     BlogCenterComponent,
     BlogListComponent,
-    BlogDetailComponent
+    BlogDetailComponent,
+    FooterComponent,
+    ChatComponent,
+    ChatInputComponent,
+    ChatListComponent
   ],
   // imports makes the exported declarations of other modules available in the
   // current module
