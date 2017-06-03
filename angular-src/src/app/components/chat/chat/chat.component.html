@@ -1,7 +1,5 @@
-
 <h2 class="page-header">Chat</h2>
-
-<div class="container">
-  <app-chat-list [messages]="messages"></app-chat-list>
+<div class="my-chat-container">
+  <app-chat-list [author]="username" [messages]="messages"></app-chat-list>
   <app-chat-input [author]="username"></app-chat-input>
 </div>

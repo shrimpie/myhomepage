@@ -1,4 +1,5 @@
 #messages {
+    background: #fefefe;
     border: 1px solid #eee;
     border-radius: 5px;
     bottom: 50px;
@@ -16,4 +17,38 @@
 
 #messages ul {
   list-style-type: none;
+}
+#messages li {
+  padding-bottom: 5px;
+}
+
+#messages li::after {
+  content:'';
+  display: table;
+  clear: both;
+}
+
+.message {
+  border: 1px solid #eee;
+  border-radius: 3px;
+  padding: 5px;
+}
+
+.other-message {
+  margin-left: 15px;
+}
+.self-message {
+  background: #90ee90;
+  margin-right: 10px;
+}
+
+.logo {
+  padding: 5px;
+  border: 2px solid #000;
+  border-radius: 3px;
+}
+.other-logo {
+}
+.self-logo {
+  margin-right: 30px;
 }

@@ -66,9 +66,9 @@ io.on('connection', (socket) => {
   });
   socket.on('add-message', (message) => {
     console.log('message received at server', message);
-    io.emit('message', { type:'new-message', msg: message });
+    io.emit('message', { type :'new-message', msg : message });
   });
 });
 http.listen(5000, () => {
-  console.log('socket.io started on port 5000');
+  console.log('socket.io server started on port 5000');
 });

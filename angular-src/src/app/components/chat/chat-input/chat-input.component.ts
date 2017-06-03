@@ -11,7 +11,7 @@ export class ChatInputComponent implements OnInit {
 
   private message : Message;
   private messageContent : string;
-  private to_author : string;
+  private to_author : string = '';
 
   @Input() author : string;
 
@@ -22,10 +22,7 @@ export class ChatInputComponent implements OnInit {
   }
 
   sendMessage() {
-    // console.log('this.messageContent: ', this.messageContent);
-    // console.log('this.to_author', this.to_author);
     this.message = new Message(this.author, this.to_author, this.messageContent);
-    // console.log('this.message:', this.message);
     this._chatService.sendMessage(this.message);
     this.messageContent = '';
   }
