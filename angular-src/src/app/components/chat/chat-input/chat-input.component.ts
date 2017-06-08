@@ -1,6 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Message } from '../../../models/message';
-import { ChatService } from '../../../services/chat.service';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+// import { Message } from '../../../models/message';
+import { SocketService } from '../../../services/socket.service';
+import { FlashMessagesService } from 'angular2-flash-messages';
 
 @Component({
   selector: 'app-chat-input',
@@ -9,21 +10,42 @@ import { ChatService } from '../../../services/chat.service';
 })
 export class ChatInputComponent implements OnInit {
 
-  private message : Message;
+  private message : any;
   private messageContent : string;
-  private to_author : string = '';
 
   @Input() author : string;
+  @Input() authorId : string;
+  @Input() toAuthorId : string;
+  @Input() toSocketId : string;
 
-  constructor(private _chatService : ChatService) {
+  @Output()
+  NewMessage = new EventEmitter();
+
+  constructor(private _socketService : SocketService,
+              private _flashMessage : FlashMessagesService) {
   }
 
   ngOnInit() {
   }
 
   sendMessage() {
-    this.message = new Message(this.author, this.to_author, this.messageContent);
-    this._chatService.sendMessage(this.message);
+
+    if(!this.toAuthorId) {
+      this.messageContent = '';
+      this._flashMessage.show('Select a user to chat with', {
+        cssClass: 'alert-danger',
+        timeout: 3000
+      });
+      return;
+    }
+    this.message = {
+      authorId : this.authorId,
+      toAuthorId : this.toAuthorId,
+      content : this.messageContent,
+      toSocketId : this.toSocketId
+    }
+    this.NewMessage.emit(this.message);
+    this._socketService.sendMessage(this.message);
     this.messageContent = '';
   }
 

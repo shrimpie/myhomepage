@@ -4,21 +4,12 @@ const config = require('../config/database');
 
 // user schema
 const UserSchema = mongoose.Schema({
-  name : {
-    type: String
-  },
-  email : {
-    type: String,
-    required: true
-  },
-  username : {
-    type: String,
-    required: true
-  },
-  password : {
-    type: String,
-    required: true
-  }
+  name : String,
+  email : { type: String, required: true },
+  username : { type: String, required: true },
+  password : { type: String, required: true },
+  online : String,
+  socketId : String
 });
 
 const User = module.exports = mongoose.model('User', UserSchema);
@@ -46,5 +37,16 @@ module.exports.comparePassword = function(candidatePassword, hash, callback) {
   bcrypt.compare(candidatePassword, hash, (err, isMatch) => {
     if(err) throw err;
     callback(null, isMatch);
+  });
+}
+
+module.exports.addSocketId = function(data) {
+  User.findById(data.id, function(err, user) {
+    // console.log('user:', user);
+    user.socketId = data.value.socketId;
+    user.online = data.value.online;
+    user.save(function(err, updatedUser) {
+      // console.log('updatedUser:', updatedUser);
+    });
   });
 }

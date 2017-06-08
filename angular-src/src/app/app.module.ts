@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import {RouterModule, Routes} from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -24,6 +24,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { ChatComponent } from './components/chat/chat/chat.component';
 import { ChatInputComponent } from './components/chat/chat-input/chat-input.component';
 import { ChatListComponent } from './components/chat/chat-list/chat-list.component';
+import { OnlineUsersComponent } from './components/chat/online-users/online-users.component';
 
 
 const appRoutes: Routes =  [
@@ -32,7 +33,7 @@ const appRoutes: Routes =  [
   { path:'login', component: LoginComponent },
   { path:'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   { path:'profile', component: ProfileComponent, canActivate: [AuthGuard] },
-  { path:'blogapi/blogs', component: BlogCenterComponent, canActivate: [AuthGuard] },
+  { path:'blogs', component: BlogCenterComponent, canActivate: [AuthGuard] },
   { path:'chat', component: ChatComponent, canActivate: [AuthGuard] }
 ]
 
@@ -55,7 +56,8 @@ const appRoutes: Routes =  [
     FooterComponent,
     ChatComponent,
     ChatInputComponent,
-    ChatListComponent
+    ChatListComponent,
+    OnlineUsersComponent
   ],
   // imports makes the exported declarations of other modules available in the
   // current module

@@ -23,14 +23,9 @@ module.exports = function(passport) {
     // 2. done is a passport error first callback accepting arguments
     //    done(error, user, info)
     User.getUserById(jwtPayload._doc._id, (err, user) => {
-      if(err) {
-        return done(err, false);
-      }
-      if(user) {
-        return done(null, user);
-      } else {
-        return done(null, false);
-      }
+      if(err) { return done(err, false); }
+      if(user) { return done(null, user); }
+      return done(null, false);
     });
   }));
 }

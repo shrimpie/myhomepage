@@ -1,21 +1,19 @@
-<div id="messages">
-  <h4>Messages</h4>
-  <hr />
-  <ul *ngFor="let message of messages">
-    <li>
-      <!-- self message -->
-      <span *ngIf="message.from_author===author" class="pull-right">
-         <span class="message self-message text-right">{{ message.content }}</span>
-         <span class="logo self-logo"><b>{{ message.from_author }}</b></span>
-         <!-- <hr /> -->
-      </span>
-      <!-- other's message -->
-      <span *ngIf="message.from_author!==author" class="pull-left">
-        <span class="logo other-logo"><b>{{ message.from_author }}</b></span>
-        <span class="message other-message">{{ message.content }}</span>
-        <!-- <hr /> -->
-      </span>
+<div class="message-header">
+  <h4> Messages
+    <span *ngIf="selectedUser">
+      <small>&nbsp;(chatting with {{selectedUser}})</small>
+    </span>
+  </h4>
+</div>
 
+<div id="message-container">
+  <ul class="message-list">
+    <li *ngFor="let message of messages"
+        [class.self-message]="isSelfMessage(message)"
+        [class.other-message]="!isSelfMessage(message)">
+        <div class="message-item">
+          <span>{{ message.content }}</span>
+        </div>
     </li>
   </ul>
 </div>

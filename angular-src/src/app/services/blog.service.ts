@@ -7,20 +7,20 @@ import { Blog } from "../models/blog";
 @Injectable()
 export class BlogService {
 
-  private _getUrl = "http://localhost:3000/blogapi/blogs";
-  private _postUrl = "http://localhost:3000/blogapi/blog";
-  private _putUrl = "http://localhost:3000/blogapi/blog/";
-  private _deleteUrl = "http://localhost:3000/blogapi/blog/";
+  private _getUrl = "http://localhost:3000/blogs";
+  private _postUrl = "http://localhost:3000/blog";
+  private _putUrl = "http://localhost:3000/blog/";
+  private _deleteUrl = "http://localhost:3000/blog/";
 
 
   constructor(private _http : Http) { }
 
-  getBlogs(author:string) {
+  getBlogs(author : string) {
     // console.log('2. author: ', author);
     let params: URLSearchParams = new URLSearchParams();
     params.set('author', author);
     // console.log('params: ', params);
-    
+
     return this._http.get(this._getUrl, {
       search: params
     }).map((res: Response) => res.json());

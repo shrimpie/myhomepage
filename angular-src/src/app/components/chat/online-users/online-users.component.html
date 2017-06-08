@@ -1,0 +1,12 @@
+<div class="onlineuser-header">
+  <h4>Online Users</h4>
+</div>
+<div id="online-users">
+  <ul>
+    <li *ngFor="let user of onlineUsers"
+        [class.selected-user]="isUserSelected(user._id)"
+        (click)="onSelectUser(user)">
+      {{user.username}}
+    </li>
+  </ul>
+</div>

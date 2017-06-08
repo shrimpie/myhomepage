@@ -1,54 +1,58 @@
-#messages {
-    background: #fefefe;
-    border: 1px solid #eee;
-    border-radius: 5px;
-    bottom: 50px;
-    left: 0;
-    right: 0;
-    height: 70vh;
-    overflow: auto;
-    margin-bottom: 5px;
-}
-
-#messages h4 {
-  margin-left: 20px;
-  margin-bottom: -5px;
-}
-
-#messages ul {
-  list-style-type: none;
-}
-#messages li {
-  padding-bottom: 5px;
-}
-
-#messages li::after {
-  content:'';
-  display: table;
-  clear: both;
-}
-
-.message {
+.message-header {
   border: 1px solid #eee;
-  border-radius: 3px;
-  padding: 5px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+.message-header h4 {
+  margin-left: 20px;
 }
 
-.other-message {
-  margin-left: 15px;
+#message-container {
+  padding-top: 10px;
+  background: #fefefe;
+  border: 1px solid #eee;
+  height: 70vh;
+  overflow: scroll;
+  border-top: none;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
 }
-.self-message {
-  background: #90ee90;
+
+ul, li {
+ list-style: none;
+ margin: 0;
+ padding: 0;
+}
+
+li {
+  display: block;
+  padding: 3px;
+  margin-bottom: 5px;
+}
+
+li .message-item {
+  padding: 3px;
+  border-radius: 5px;
+}
+
+.other-message .message-item {
+  margin-left: 10px;
+  margin-right: 20%;
+  float: left;
+  border: none;
+  background: #eee;
+}
+
+.self-message .message-item {
   margin-right: 10px;
+  margin-left: 20%;
+  float: right;
+  border: none;
+  background: #A9DFBF;
 }
 
-.logo {
-  padding: 5px;
-  border: 2px solid #000;
-  border-radius: 3px;
-}
-.other-logo {
-}
-.self-logo {
-  margin-right: 30px;
+.self-message::after, .other-message::after {
+  content:"";
+  display:table;
+  clear:both;
 }

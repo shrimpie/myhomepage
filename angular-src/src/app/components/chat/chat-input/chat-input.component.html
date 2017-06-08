@@ -1,15 +1,18 @@
-<form class="center">
+<form>
+
   <div class="input-group">
+
     <span class="input-group-addon" id="sizing-addon1">{{ author }}</span>
-    <input [(ngModel)]="to_author" name="to_author" class="form-control"
-           type="text" placeholder="To…" style="width:20%">
     <input [(ngModel)]="messageContent" name="messageContent"
-           class="form-control" type="text"  style="width:80%"
-           placeholder="Insert your message here…" (keypress)="checkKey($event)"/>
+           class="form-control" type="text" (keypress)="checkKey($event)"
+           placeholder="Select a user to chat with…"/>
+
     <span class="input-group-btn">
-        <button class="btn btn-primary" type="button"
-                (click)="sendMessage()">Send
+        <button class="btn btn-primary" type="button" (click)="sendMessage()">
+          Send
         </button>
     </span>
+
   </div>
+
 </form>

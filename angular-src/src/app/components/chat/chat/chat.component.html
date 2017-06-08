@@ -1,5 +1,26 @@
 <h2 class="page-header">Chat</h2>
-<div class="my-chat-container">
-  <app-chat-list [author]="username" [messages]="messages"></app-chat-list>
-  <app-chat-input [author]="username"></app-chat-input>
+
+<div class="chat-container">
+
+  <div class="chat-messages col-sm-8">
+    <app-chat-list [author]="username" [messages]="messages"
+                   [selectedUser]="selectedUserName"
+                   [userId]="userId">
+    </app-chat-list>
+  </div>
+  <div class="online-users col-sm-4">
+    <app-online-users [onlineUsers]="onlineUsers"
+                      [selectedUserId]="selectedUserId"
+                      (SelectUser)="onSelectUser($event)">
+    </app-online-users>
+  </div>
+
+  <div class="chat-input">
+    <app-chat-input [author]="username"
+                    [authorId]="userId" [toAuthorId]="selectedUserId"
+                    [toSocketId]="selectedSocketId"
+                    (NewMessage)="onNewMessage($event)">
+    </app-chat-input>
+  </div>
+
 </div>

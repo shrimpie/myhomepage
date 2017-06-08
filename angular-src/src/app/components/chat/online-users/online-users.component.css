@@ -1,0 +1,35 @@
+.onlineuser-header {
+  border: 1px solid #eee;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.onlineuser-header h4 {
+  margin-left: 20px;
+}
+
+
+#online-users {
+  padding-top: 5px;
+  background: #fefefe;
+  border: 1px solid #eee;
+  border-top: none;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  height: 70vh;
+  overflow: auto;
+}
+
+ul, li {
+   list-style: none;
+   margin: 0;
+   padding: 0;
+}
+
+li {
+  padding-left: 20px;
+}
+
+.selected-user {
+  background: #eee;
+}

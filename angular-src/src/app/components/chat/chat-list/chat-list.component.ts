@@ -8,12 +8,24 @@ import { Message } from '../../../models/message';
 })
 export class ChatListComponent implements OnInit {
 
-  @Input() messages : Message[];
-  @Input() author : string;
-  @Input() to_author : string;
-  constructor() { }
+  @Input() messages: Message[];
+  @Input() author: string;
+  @Input() userId: string;
+  @Input() selectedUser: string;
+
+  constructor() {
+  }
 
   ngOnInit() {
+  }
+
+  isSelfMessage(msg) {
+    // console.log('chat-list.component | msg: ', msg);
+    return this.userId === msg.authorId ? true : false;
+  }
+
+  onchange() {
+
   }
 
 }

@@ -20,9 +20,6 @@ export class BlogCenterComponent implements OnInit {
 
   ngOnInit() {
 
-    // Is this a good way to add attributes to blog?
-    // I don't want to add a form item of username, since it's not reasonable to
-    // have one.
     this.username = JSON.parse(localStorage.getItem('user'))['username'];
     // console.log('1. username: ', this.username);
 
