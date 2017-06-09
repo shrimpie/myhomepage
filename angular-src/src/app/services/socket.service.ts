@@ -24,7 +24,6 @@ export class SocketService {
   }
 
   sendMessage(message : any) : void {
-    // console.log('socket.service.ts sendMessage | message:', message);
     this.socket.emit('add-message', message);
   }
 

@@ -7,6 +7,11 @@
   margin-left: 20px;
 }
 
+.chat-reminder {
+  text-align: center;
+  opacity: .3;
+}
+
 #message-container {
   padding-top: 10px;
   background: #fefefe;

@@ -20,12 +20,7 @@ export class ChatListComponent implements OnInit {
   }
 
   isSelfMessage(msg) {
-    // console.log('chat-list.component | msg: ', msg);
     return this.userId === msg.authorId ? true : false;
-  }
-
-  onchange() {
-
   }
 
 }

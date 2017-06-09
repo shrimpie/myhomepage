@@ -7,6 +7,9 @@
 </div>
 
 <div id="message-container">
+  <div class="chat-reminder" *ngIf="!selectedUser">
+    <h3>Select a user to check with</h3>
+  </div>
   <ul class="message-list">
     <li *ngFor="let message of messages"
         [class.self-message]="isSelfMessage(message)"

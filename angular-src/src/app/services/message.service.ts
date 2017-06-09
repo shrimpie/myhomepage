@@ -11,11 +11,9 @@ export class MessageService {
   constructor(private _http : Http) { }
 
   getMessages(condition : any) {
-    // console.log('message.service.ts | getMessages | condition:', condition);
     let params: URLSearchParams = new URLSearchParams();
     params.set('authorId', condition.authorId);
     params.set('toAuthorId', condition.toAuthorId);
-    // console.log('params: ', params);
 
     return this._http.get(this._getUrl, {
       search: params

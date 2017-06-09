@@ -43,8 +43,8 @@ module.exports.comparePassword = function(candidatePassword, hash, callback) {
 module.exports.addSocketId = function(data) {
   User.findById(data.id, function(err, user) {
     // console.log('user:', user);
-    user.socketId = data.value.socketId;
-    user.online = data.value.online;
+    user.socketId = data.socketId;
+    user.online = data.online;
     user.save(function(err, updatedUser) {
       // console.log('updatedUser:', updatedUser);
     });

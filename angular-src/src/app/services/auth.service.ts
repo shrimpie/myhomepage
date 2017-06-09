@@ -6,9 +6,9 @@ import { tokenNotExpired } from 'angular2-jwt';
 @Injectable()
 export class AuthService {
 
-  authToken: any;
-  user: any;
-
+  private authToken: any;
+  private user: any;
+  private baseUrl = 'http://localhost:3000/';
   // use the constructor to inject the dependency
   // (Another way to do it would be to use the @Inject annotation on each
   // injected constructor parameter, but this one is cleaner.)
@@ -20,7 +20,7 @@ export class AuthService {
     headers.append('Content-Type', 'application/json');
     // http.post is a shortcut method to perform POST request.
     // It returns a future object (HttpPromise).
-    return this.http.post('http://localhost:3000/users/register', user, {
+    return this.http.post(this.baseUrl + 'users/register', user, {
       headers: headers
     }).map(res => res.json());
   }
@@ -28,8 +28,7 @@ export class AuthService {
   authenticateUser(user) {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    //
-    return this.http.post('http://localhost:3000/users/authenticate', user, {
+    return this.http.post(this.baseUrl + 'users/authenticate', user, {
       headers: headers
     }).map(res => res.json());
   }
@@ -41,7 +40,7 @@ export class AuthService {
     headers.append('Content-Type', 'application/json');
     // The get method of http (from the angular/http/Http class) creates an
     // Observable object.
-    return this.http.get('http://localhost:3000/users/profile', {
+    return this.http.get(this.baseUrl + 'users/profile', {
       headers: headers
     }).map(res => res.json());
     // 1. The map function processes a result from the observable (in our case,

@@ -8,30 +8,23 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const passport = require('passport');
 const config = require('./config/database');
+const mongoose = require('mongoose');
 
 const UserRoute = require('./routes/users');
 const BlogRoute = require('./routes/blogs');
 const MessageRoute = require('./routes/messages');
 const SocketEvents = require('./utils/socket');
 
-const mongoose = require('mongoose');
-mongoose.connect(config.database);
-mongoose.connection.on('connected', () => {
-  console.log('Connected to database: ' + config.database);
-});
-mongoose.connection.on('error', (err) => {
-  console.log('Database error: ' + err);
-});
 
 class Server {
 
   constructor () {
     this.port = 3000;
     this.host = `localhost`;
-
     this.app = express();
     this.http = http.Server(this.app);
     this.socket = socketio(this.http);
+    this.db = mongoose;
   }
 
   appConfig() {
@@ -47,13 +40,23 @@ class Server {
     new UserRoute(this.app).routesConfig();
     new BlogRoute(this.app).routesConfig();
     new MessageRoute(this.app).routesConfig();
-
     new SocketEvents(this.socket).socketConfig();
+  }
+
+  connectDatabase() {
+    this.db.connect(config.database);
+    this.db.connection.on('connected', () => {
+      console.log('Connected to database: ' + config.database);
+    });
+    this.db.connection.on('error', (err) => {
+      console.log('Database error: ' + err);
+    });
   }
 
   appExecute() {
     this.appConfig();
     this.includeRoutes();
+    this.connectDatabase();
     this.http.listen(this.port, this.host, () => {
         console.log(`Listening on http://${this.host}:${this.port}`);
     });

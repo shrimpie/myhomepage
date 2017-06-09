@@ -58,20 +58,6 @@ class Helper {
 		});
 	}
 
-
-	// each time a new user logs in, a socketid is added the user's information
-	// in the database.
-	// addSocketId(data, callback) {
-	// 	this.Mongodb.onConnect((db, ObjectID) => {
-	// 		db.collection(this.userCollection).update({
-	// 			_id : ObjectID(data.id)
-	// 		}, data.value, (err, result) => {
-	// 			db.close();
-	// 			callback(err, result.result);
-	// 		});
-	// 	});
-	// }
-
 }
 
 module.exports = new Helper();

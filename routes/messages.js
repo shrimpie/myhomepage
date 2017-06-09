@@ -16,10 +16,7 @@ class MessageRoute {
   messageRoutes() {
 
     this.app.get('/messages', (req, res) => {
-      // console.log('Get request for all messages');
       var queryData = url.parse(req.url, true).query;
-      // console.log('messages.js | messageRoutes | queryData: ', queryData);
-
       let condition = {
         '$or' : [
           { '$and': [
@@ -42,6 +39,10 @@ class MessageRoute {
          }
       });
     });
+
+    // this.app.get('*', function(req, res) {
+    //     res.sendFile(path.join(__dirname, 'public/index.html'));
+    // });
 
   }
 

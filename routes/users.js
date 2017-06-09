@@ -15,7 +15,6 @@ class UserRoute {
   userRoutes() {
 
     this.app.post('/users/register', (req, res) => {
-      // console.log('req.body:', req.body);
       let newUser = new User({
         name: req.body.name,
         email: req.body.email,
@@ -26,7 +25,6 @@ class UserRoute {
       });
       User.addUser(newUser, (err, user) => {
         if(err) {
-          console.log('[users.js] post /users/register error:', err);
           res.json({ success: false, msg: 'Failed to register user'});
         } else {
           res.json({ success: true, msg: 'User registered'});
@@ -40,9 +38,7 @@ class UserRoute {
       const password = req.body.password;
 
       User.getUserByUserName(username, (err, user) => {
-        if(err) {
-          throw err;
-        }
+        if(err) { throw err; }
         if(!user) {
           return res.json({ success: false, msg: 'User not found'});
         }
@@ -75,14 +71,11 @@ class UserRoute {
     // Unauthorized status, and any additional route handlers will not be invoked.
     // If authentication succeeds, the next handler will be invoked and the req.user
     // property will be set to the authenticated user.
-    this.app.get('/users/profile', passport.authenticate('jwt', { session: false }),
-      (req, res) => {
+    this.app.get('/users/profile', passport.authenticate('jwt', {
+      session: false
+    }), (req, res) => {
       res.json({ user: req.user });
     });
-
-    // this.app.get('*', function(req, res) {
-    //     res.sendFile(path.join(__dirname, 'public/index.html'));
-    // });
 
   }
 

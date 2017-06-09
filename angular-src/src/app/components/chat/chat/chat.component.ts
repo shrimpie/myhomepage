@@ -22,22 +22,23 @@ export class ChatComponent implements OnInit, OnDestroy {
   private messages : Array<Message> = [];
   private onlineUsers : Array<User> = [];
 
+  private socketCon = null;
+
   constructor(private _socketService : SocketService,
               private _messageService : MessageService) {
   }
 
   ngOnDestroy() {
+    this.socketCon.unsubscribe();
   }
 
   ngOnInit() {
-    // this.showNewestMessages();
     this.username = JSON.parse(localStorage.getItem('user'))['username'];
     this.userId = JSON.parse(localStorage.getItem('user'))['id'];
 
     this._socketService.connectSocket(this.userId);
     this._socketService.getChatList(this.userId).subscribe(
       res => {
-        // console.log('chat.component.ts | ngOnInit | res:', res);
         this.showChatListFromResponse(res);
       }
 		);
@@ -70,14 +71,15 @@ export class ChatComponent implements OnInit, OnDestroy {
     }
   }
 
-
   subscribeForMessages() {
-    this._socketService.receiveMessages().subscribe(response => {
-      if(this.selectedUserId &&
-         this.selectedUserId == response.authorId) {
-        this.messages.push(response);
-        this.showNewestMessages();
-      }
+    this.socketCon = this._socketService.receiveMessages().subscribe(
+      response => {
+        if(this.selectedUserId &&
+           this.selectedUserId == response.authorId) {
+          // console.log('Got a new message: ', response);
+          this.messages.push(response);
+          this.showNewestMessages();
+        }
     });
   }
 
@@ -90,7 +92,6 @@ export class ChatComponent implements OnInit, OnDestroy {
       authorId: this.userId,
       toAuthorId : this.selectedUserId
     }).subscribe(res => {
-      // console.log('chat.component.ts | onSelectUser | res:', res);
       this.messages = res;
       this.showNewestMessages();
     });
@@ -106,16 +107,12 @@ export class ChatComponent implements OnInit, OnDestroy {
     setTimeout(() => {
       $('#message-container').animate({
         scrollTop: $('#message-container')[0].scrollHeight
-      }, 800, function() {
+      }, 1000, function() {
         console.log('Animation complete');
       });
 
     }, 100);
 
-    // setTimeout(() => {
-    //   document.querySelector(`#message-container`).scrollTop =
-    //     document.querySelector(`#message-container`).scrollHeight;
-    // }, 100);
   }
 
 }
