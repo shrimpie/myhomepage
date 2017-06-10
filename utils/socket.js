@@ -45,8 +45,9 @@ class Socket {
         socket.broadcast.emit('chat-list-response', {
 					error : false,
 					userDisconnected : true,
-					socketId : socket.id
+					socketId: socket.id
 				});
+
       });
 
       // Handles when clients add new messages
@@ -67,7 +68,21 @@ class Socket {
 						this.io.to(toSocketId).emit('add-message-response', data);
 					});
 				} // else
-      }); // 'add-message'
+      }); // on 'add-message'
+
+      // Logout the user
+      socket.on('logout', (userId) => {
+        helper.logout(userId, (error, result) => {
+          this.io.to(socket.id).emit('logout-response', {
+            error: false
+          });
+          socket.broadcast.emit('chat-list-response',{
+            error: false,
+            userDisconnected : true,
+            socketId : socket.id
+          });
+        });
+      });
 
     });
   }
@@ -77,14 +92,16 @@ class Socket {
     // a socketId written to the database, so I can remember which user uses
     // which socket, thus private chat.
     this.io.use(function(socket, next) {
-			let userID = socket.request._query['userId'];
+      // console.log('socket.js | client socket connected');
+			let userId = socket.request._query['userId'];
     	let userSocketId = socket.id;
     	const data = {
-    		id : userID,
+    		id : userId,
 				socketId : userSocketId,
 				online : 'Y'
     	}
       User.addSocketId(data);
+      // console.log('socketId: ' + userSocketId + ' added to userId: ' + userId);
     	next();
     });
     this.socketEvents();

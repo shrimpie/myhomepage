@@ -6,9 +6,10 @@ import * as io from 'socket.io-client';
 export class SocketService {
 
   private BASE_URL = 'http://localhost:3000';
-  private socket;
+  public socket = null;
 
-  constructor() {}
+  constructor() {
+  }
 
   connectSocket(userId : string) {
     this.socket = io(this.BASE_URL, { query : `userId=${userId}` });
@@ -17,8 +18,10 @@ export class SocketService {
   getChatList(userId : string) : any {
     this.socket.emit('chat-list' , { userId : userId });
     let observable = new Observable(observer => {
-      this.socket.on('chat-list-response', (data) => { observer.next(data); });
-      return () => { this.socket.disconnect(); };
+      this.socket.on('chat-list-response', (data) => {
+        observer.next(data);
+      });
+      return () => { this.socket.disconnect();};
     });
     return observable;
   }
@@ -37,6 +40,19 @@ export class SocketService {
     return observable;
   }
 
+  logout(userId) : any {
+    if(!this.socket) {
+      // console.log('Socket uninitialized in socket.service.ts');
+    }
+    this.socket.emit('logout', userId);
+    let observable = new Observable(observer => {
+      this.socket.on('logout-response', (data) => {
+        observer.next(data);
+      });
+      return () => { this.socket.disconnect(); };
+    });
+    return observable;
+  }
 
 
 }

@@ -35,7 +35,6 @@ class Helper {
 		})
 	}
 
-	//
 	getMessages(userId, toUserId, callback) {
 		const data = {
       '$or' : [
@@ -55,6 +54,13 @@ class Helper {
 			'timestamp': 1
 		}, (err, result) => {
       callback(err, result);
+		});
+	} // getMessages
+
+	logout(userId, callback) {
+		const data = { $set : { online : 'N' } };
+		User.update({ _id: userId }, data, (err, result) => {
+			callback(err, result);
 		});
 	}
 

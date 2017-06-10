@@ -5,8 +5,7 @@ import { BlogService } from '../../../services/blog.service';
 @Component({
   selector: 'app-blog-center',
   templateUrl: './blog-center.component.html',
-  styleUrls: ['./blog-center.component.css'],
-  providers: [BlogService]
+  styleUrls: ['./blog-center.component.css']
 })
 export class BlogCenterComponent implements OnInit {
 
@@ -37,12 +36,12 @@ export class BlogCenterComponent implements OnInit {
   onSelectBlog(blog : Blog) {
     this.selectedBlog = blog;
     this.hideNewBlog = true;
-    console.log(this.selectedBlog);
+    // console.log(this.selectedBlog);
   }
 
   onSubmitAddBlog(blog : Blog) {
     blog['author'] = this.username;
-    console.log('new blog: ', blog);
+    // console.log('new blog: ', blog);
 
     this._blogService
         .addBlog(blog)
@@ -57,7 +56,7 @@ export class BlogCenterComponent implements OnInit {
   }
 
   onUpdateBlogEvent(blog : Blog) {
-    console.log('update blog: ', blog);
+    // console.log('update blog: ', blog);
     this._blogService
         .updateBlog(blog)
         .subscribe(resUpdatedBlog => {

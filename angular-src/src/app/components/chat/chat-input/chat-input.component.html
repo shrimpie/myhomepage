@@ -5,7 +5,7 @@
     <span class="input-group-addon" id="sizing-addon1">{{ author }}</span>
     <input [(ngModel)]="messageContent" name="messageContent"
            class="form-control" type="text" (keypress)="checkKey($event)"
-           placeholder="Select a user to chat with…"/>
+           placeholder="Type and hit enter…"/>
 
     <span class="input-group-btn">
         <button class="btn btn-primary" type="button" (click)="sendMessage()">

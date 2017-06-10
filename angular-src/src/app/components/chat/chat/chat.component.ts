@@ -5,11 +5,12 @@ import { SocketService } from '../../../services/socket.service';
 import { MessageService } from '../../../services/message.service';
 import * as $ from 'jquery';
 
+import { Broadcaster } from "../../../services/broadcast.service";
+
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
-  styleUrls: ['./chat.component.css'],
-  providers: [SocketService, MessageService]
+  styleUrls: ['./chat.component.css']
 })
 export class ChatComponent implements OnInit, OnDestroy {
 
@@ -25,7 +26,16 @@ export class ChatComponent implements OnInit, OnDestroy {
   private socketCon = null;
 
   constructor(private _socketService : SocketService,
-              private _messageService : MessageService) {
+              private _messageService : MessageService,
+              private _broadcaster: Broadcaster) {
+
+    this._broadcaster.on('testclickevent')
+      .subscribe(message => {
+        // console.log('broadcast message received: ', message);
+        this._socketService.logout(this.userId).subscribe(res => {
+          // console.log('logout result message: ', res);
+        })
+    });
   }
 
   ngOnDestroy() {
@@ -39,6 +49,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     this._socketService.connectSocket(this.userId);
     this._socketService.getChatList(this.userId).subscribe(
       res => {
+        // console.log('got chat list:', res);
         this.showChatListFromResponse(res);
       }
 		);
@@ -76,7 +87,6 @@ export class ChatComponent implements OnInit, OnDestroy {
       response => {
         if(this.selectedUserId &&
            this.selectedUserId == response.authorId) {
-          // console.log('Got a new message: ', response);
           this.messages.push(response);
           this.showNewestMessages();
         }
@@ -110,7 +120,6 @@ export class ChatComponent implements OnInit, OnDestroy {
       }, 1000, function() {
         console.log('Animation complete');
       });
-
     }, 100);
 
   }

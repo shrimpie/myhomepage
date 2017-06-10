@@ -14,6 +14,12 @@ import { ProfileComponent } from './components/profile/profile.component';
 
 import { ValidateService } from './services/validate.service';
 import { AuthService } from './services/auth.service';
+import { SocketService } from './services/socket.service';
+import { MessageService } from './services/message.service';
+import { BlogService } from './services/blog.service';
+import { Broadcaster } from './services/broadcast.service';
+
+
 import { FlashMessagesModule } from 'angular2-flash-messages';
 
 import { AuthGuard } from './guards/auth.guard';
@@ -38,10 +44,6 @@ const appRoutes: Routes =  [
 ]
 
 @NgModule({
-  // declarations are to make directives (including components and pipes) from
-  // the current module available to other directives in the current module.
-  // Selectors of directives, components or pipes are only matched against the
-  // HTML if they are declared or imported.
   declarations: [
     AppComponent,
     NavbarComponent,
@@ -59,25 +61,15 @@ const appRoutes: Routes =  [
     ChatListComponent,
     OnlineUsersComponent
   ],
-  // imports makes the exported declarations of other modules available in the
-  // current module
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
-    // The forRoot static method is a convention that makes it easy for
-    // developers to configure the module's providers. The RouterModule.forRoot
-    // method is a good example. Apps pass a Routes object to
-    // RouterModule.forRoot in order to configure the app-wide Router service
-    // with routes. RouterModule.forRoot returns a ModuleWithProviders.
-    // You add that result to the imports list of the root AppModule.
     RouterModule.forRoot(appRoutes),
     FlashMessagesModule
   ],
-  // providers are to make services and values known to DI. They are added to
-  // the root scope and they are injected to other services or directives that
-  // have them as dependency.
-  providers: [ValidateService, AuthService, AuthGuard],
+  providers: [ValidateService, AuthService, SocketService, BlogService,
+    Broadcaster, MessageService, AuthGuard],
   bootstrap: [AppComponent]
 })
 
