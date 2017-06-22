@@ -8,7 +8,7 @@ export class AuthService {
 
   private authToken: any;
   private user: any;
-  private baseUrl = 'http://localhost:' + (process.env.port || 8080) + '/';
+  private baseUrl = 'http://localhost:' + (process.env.PORT || 8080) + '/';
 
   constructor(private http: Http) {
     console.log('this.baseUrl: ', this.baseUrl);

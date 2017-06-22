@@ -7,7 +7,7 @@ import { Blog } from "../models/blog";
 @Injectable()
 export class BlogService {
 
-  private baseUrl = "http://localhost:" + (process.env.port || 8080);
+  private baseUrl = "http://localhost:" + (process.env.PORT || 8080);
 
   private _getUrl = this.baseUrl +  "/blogs";
   private _postUrl = this.baseUrl +  "/blog";

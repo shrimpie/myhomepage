@@ -57,7 +57,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var BlogService = (function () {
     function BlogService(_http) {
         this._http = _http;
-        this.baseUrl = "http://localhost:" + (process.env.port || 8080);
+        this.baseUrl = "http://localhost:" + (process.env.PORT || 8080);
         this._getUrl = this.baseUrl + "/blogs";
         this._postUrl = this.baseUrl + "/blog";
         this._putUrl = this.baseUrl + "/blog/";
@@ -120,7 +120,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var MessageService = (function () {
     function MessageService(_http) {
         this._http = _http;
-        this.baseUrl = "http://localhost:" + (process.env.port || 8080);
+        this.baseUrl = "http://localhost:" + (process.env.PORT || 8080);
         this._getUrl = this.baseUrl + "/messages";
     }
     MessageService.prototype.getMessages = function (condition) {
@@ -2085,7 +2085,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var AuthService = (function () {
     function AuthService(http) {
         this.http = http;
-        this.baseUrl = 'http://localhost:' + (process.env.port || 8080) + '/';
+        this.baseUrl = 'http://localhost:' + (process.env.PORT || 8080) + '/';
         console.log('this.baseUrl: ', this.baseUrl);
     }
     AuthService.prototype.registerUser = function (user) {
@@ -2165,7 +2165,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 var SocketService = (function () {
     function SocketService() {
-        this.BASE_URL = 'http://localhost:' + (process.env.port || 8080) + '/';
+        this.BASE_URL = 'http://localhost:' + (process.env.PORT || 8080) + '/';
         this.socket = null;
     }
     SocketService.prototype.connectSocket = function (userId) {
