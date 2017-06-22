@@ -1,8 +1,7 @@
 # Dependency directories
-node_modules/
+node_modules
 
-# angular dependencies
-*/node_modules
+
 
 # dotenv environment variables file
 .env

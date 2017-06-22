@@ -20,6 +20,8 @@ export class VideoContainerComponent implements OnInit {
   replyGot : any;
   msgData : any;
 
+  audioStatus = 'Turn on Audio';
+
 
   @Input() selectedUser: string;
   @Input() selectedSocketId: string;
@@ -35,6 +37,19 @@ export class VideoContainerComponent implements OnInit {
   isInitiator = false;
   isChannelReady = false;
   isStarted = false;
+
+  selfVideoConstraints = {
+    video:
+      { width: { exact: 640 },
+        height: { exact: 480 }
+      },
+    audio: true
+  };
+
+  remoteVideoConstraints = {
+    audio: true,
+    video: true
+  }
 
   constructor(private _socketService : SocketService) {
   }
@@ -82,6 +97,16 @@ export class VideoContainerComponent implements OnInit {
     if(this.pc) {
       this.pc.close();
       this.pc = null;
+    }
+  }
+
+  onHandleAudio() {
+    if(this.audioStatus === 'Turn on Audio') {
+      this.localStream.getAudioTracks()[0].enabled = true;
+      this.audioStatus = 'Turn off Audio';
+    } else {
+      this.localStream.getAudioTracks()[0].enabled = false;
+      this.audioStatus = 'Turn on Audio';
     }
   }
 
@@ -221,11 +246,10 @@ export class VideoContainerComponent implements OnInit {
 
   openVideo(onLocalMediaReady) {
     if(!this.localStream) {
-      navigator.mediaDevices.getUserMedia({
-        audio: false,
-        video: true
-      })
+
+      navigator.mediaDevices.getUserMedia(this.selfVideoConstraints)
       .then((stream) => {
+        stream.getAudioTracks()[0].enabled = false;
         let video = this.myvideo.nativeElement;
         video.src = window.URL.createObjectURL(stream);
         console.log('new localStream: ', stream);
