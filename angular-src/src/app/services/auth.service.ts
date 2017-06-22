@@ -8,16 +8,14 @@ export class AuthService {
 
   private authToken: any;
   private user: any;
-  private baseUrl = 'http://localhost:' + (process.env.PORT || 8080) + '/';
 
   constructor(private http: Http) {
-    console.log('this.baseUrl: ', this.baseUrl);
   }
 
   registerUser(user) {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.post(this.baseUrl + 'users/register', user, {
+    return this.http.post('users/register', user, {
       headers: headers
     }).map(res => res.json());
   }
@@ -25,7 +23,7 @@ export class AuthService {
   authenticateUser(user) {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.post(this.baseUrl + 'users/authenticate', user, {
+    return this.http.post('users/authenticate', user, {
       headers: headers
     }).map(res => res.json());
   }
@@ -35,7 +33,7 @@ export class AuthService {
     this.loadToken();
     headers.append('Authorization', this.authToken);
     headers.append('Content-Type', 'application/json');
-    return this.http.get(this.baseUrl + 'users/profile', {
+    return this.http.get('users/profile', {
       headers: headers
     }).map(res => res.json());
   }

@@ -20,7 +20,6 @@ export class WebrtcService implements OnInit {
   pc; // self created data
 
   constructor(private _socketService : SocketService) {
-    // console.log('webrtc service this: ', this);
   }
 
   ngOnInit() {
