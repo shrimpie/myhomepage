@@ -31,9 +31,7 @@ export class ChatComponent implements OnInit, OnDestroy {
 
     this._broadcaster.on('testclickevent')
       .subscribe(message => {
-        // console.log('broadcast message received: ', message);
         this._socketService.logout(this.userId).subscribe(res => {
-          // console.log('logout result message: ', res);
         })
     });
   }
@@ -49,7 +47,6 @@ export class ChatComponent implements OnInit, OnDestroy {
     this._socketService.connectSocket(this.userId);
     this._socketService.getChatList(this.userId).subscribe(
       res => {
-        // console.log('got chat list:', res);
         this.showChatListFromResponse(res);
       }
 		);
@@ -87,8 +84,9 @@ export class ChatComponent implements OnInit, OnDestroy {
       response => {
         if(this.selectedUserId &&
            this.selectedUserId == response.authorId) {
+          console.log('received a message: ', response);
           this.messages.push(response);
-          this.showNewestMessages();
+          this.scrollToBottom();
         }
     });
   }
@@ -103,17 +101,18 @@ export class ChatComponent implements OnInit, OnDestroy {
       toAuthorId : this.selectedUserId
     }).subscribe(res => {
       this.messages = res;
-      this.showNewestMessages();
+      this.scrollToBottom();
     });
 
   }
 
   onNewMessage(message) {
+    console.log('send a new message: ', message);
     this.messages.push(message);
-    this.showNewestMessages();
+    this.scrollToBottom();
   }
 
-  showNewestMessages() {
+  scrollToBottom() {
     setTimeout(() => {
       $('#message-container').animate({
         scrollTop: $('#message-container')[0].scrollHeight

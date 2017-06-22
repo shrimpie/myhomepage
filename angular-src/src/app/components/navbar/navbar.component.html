@@ -45,11 +45,26 @@
               </a>
             </li>
             <li *ngIf="authService.loggedIn()" [routerLinkActive]="['active']"
-              [routerLinkActiveOptions]="{exact:true}">
-              <a [routerLink]="['/chat']">
-                <span class="glyphicon glyphicon-modal-window"></span>
-                &nbsp;Chat
+              [routerLinkActiveOptions]="{exact:true}" class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                 role="button" aria-haspopup="true" aria-expanded="false">
+                 Chat<span class="caret"></span>
               </a>
+              <ul class="dropdown-menu dropdown-menu-left">
+                <li>
+                  <a [routerLink]="['/textChat']">
+                    <span class="glyphicon glyphicon-edit"></span>
+                    &nbsp;Text Chat
+                  </a>
+                </li>
+                <li>
+                  <a [routerLink]="['/videoChat']">
+                    <span class="glyphicon glyphicon-facetime-video"></span>
+                    &nbsp;Video Chat
+                  </a>
+                </li>
+                <!-- <li role="separator" class="divider"></li> -->
+              </ul>
             </li>
             <li *ngIf="!authService.loggedIn()" [routerLinkActive]="['active']"
               [routerLinkActiveOptions]="{exact:true}">

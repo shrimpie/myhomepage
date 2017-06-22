@@ -13,8 +13,6 @@ import { Broadcaster } from '../../services/broadcast.service';
 })
 export class NavbarComponent implements OnInit {
 
-  // private userId = null;
-
   constructor(private authService: AuthService,
               private router: Router,
               private flashMessage: FlashMessagesService,
@@ -25,7 +23,9 @@ export class NavbarComponent implements OnInit {
   }
 
   onLogoutClick() {
+
     this._broadcaster.broadcast('testclickevent', 'Counting on you!!');
+
     this.authService.logout();
     this.flashMessage.show('You are now logged out', {
       cssClass: 'alert-success',

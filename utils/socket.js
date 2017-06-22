@@ -7,12 +7,19 @@ class Socket {
 
   constructor (socket) {
     this.io = socket;
+    console.log('this.io initialized');
+    // console.log('Got this.io: ', this.io);
   }
 
   socketEvents() {
 
     this.io.on('connection', (socket) => {
       console.log('A user is connected');
+
+      socket.on('self-socket-id', () => {
+        socket.emit('self-socket-id-response', socket.id);
+      });
+
       socket.on('chat-list', (data) => {
 				let chatListResponse = {};
 				if (data.userId == '') {
@@ -40,7 +47,7 @@ class Socket {
 				} // else
 		  }); // chat-list
 
-      socket.on('disconnect', function() {
+      socket.on('disconnect', () => {
         console.log('The user is disconnected');
         socket.broadcast.emit('chat-list-response', {
 					error : false,
@@ -84,6 +91,39 @@ class Socket {
         });
       });
 
+      ///////// below are for video chat usage ///////
+      socket.on('connect-socket-request', (data) => {
+        console.log('got connect socket event:', data);
+        console.log('sending the request to the target socket: ', data.toSocketId);
+        if(this.io.sockets.connected[data.toSocketId]) {
+          this.io.sockets.connected[data.toSocketId].emit(
+            'connect-socket-relay', {
+              fromSocketId: socket.id
+            });
+        } else {
+          console.log('relay: no such socket id alive');
+        }
+      });
+
+      socket.on('connect-socket-answer', (data) => {
+        // console.log('server is sending backing the reply to the initiator');
+        if(this.io.sockets.connected[data.toSocketId]) {
+          this.io.sockets.connected[data.toSocketId].emit(
+           'connect-socket-reply', {
+              ready: 'Y',
+              fromSocketId: socket.id
+            })
+        } else {
+          console.log('reply: no such socket id alive');
+        }
+      });
+
+      socket.on('message', (data) => {
+        if(this.io.sockets.connected[data.toSocketId]) {
+          this.io.sockets.connected[data.toSocketId].emit('message', data);
+        }
+      });
+
     });
   }
 
@@ -101,7 +141,6 @@ class Socket {
 				online : 'Y'
     	}
       User.addSocketId(data);
-      // console.log('socketId: ' + userSocketId + ' added to userId: ' + userId);
     	next();
     });
     this.socketEvents();

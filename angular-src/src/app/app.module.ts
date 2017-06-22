@@ -31,6 +31,11 @@ import { ChatComponent } from './components/chat/chat/chat.component';
 import { ChatInputComponent } from './components/chat/chat-input/chat-input.component';
 import { ChatListComponent } from './components/chat/chat-list/chat-list.component';
 import { OnlineUsersComponent } from './components/chat/online-users/online-users.component';
+import { VideoChatComponent } from './components/chat/video-chat/video-chat.component';
+import { VideoContainerComponent } from './components/chat/video-container/video-container.component';
+
+
+import { AngularDraggableModule } from 'angular2-draggable';
 
 
 const appRoutes: Routes =  [
@@ -40,7 +45,9 @@ const appRoutes: Routes =  [
   { path:'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   { path:'profile', component: ProfileComponent, canActivate: [AuthGuard] },
   { path:'blogs', component: BlogCenterComponent, canActivate: [AuthGuard] },
-  { path:'chat', component: ChatComponent, canActivate: [AuthGuard] }
+  { path:'textChat', component: ChatComponent, canActivate: [AuthGuard] },
+  { path:'videoChat', component: VideoChatComponent, canActivate: [AuthGuard] },
+
 ]
 
 @NgModule({
@@ -59,14 +66,17 @@ const appRoutes: Routes =  [
     ChatComponent,
     ChatInputComponent,
     ChatListComponent,
-    OnlineUsersComponent
+    OnlineUsersComponent,
+    VideoChatComponent,
+    VideoContainerComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
     RouterModule.forRoot(appRoutes),
-    FlashMessagesModule
+    FlashMessagesModule,
+    AngularDraggableModule
   ],
   providers: [ValidateService, AuthService, SocketService, BlogService,
     Broadcaster, MessageService, AuthGuard],

@@ -1,0 +1,32 @@
+<div class="video-header">
+  <h4> Video
+    <span *ngIf="selectedUser">
+      <small>&nbsp;(chatting with {{selectedUser}})</small>
+    </span>
+  </h4>
+</div>
+
+<div id="video-area">
+
+  <div class="video">
+    <video #localVideo ngDraggable id="localVideo" autoplay></video>
+    <video #remoteVideo ngDraggable id="remoteVideo" autoplay></video>
+  </div>
+
+</div>
+
+<div class="video-control">
+  <button type="button" id="connectBtn" class="btn btn-secondary btn-sm"
+          (click)="controlConnect()" [disabled]="connectStatus==='connected'">
+    {{ getConnectBtnText() }}
+  </button>
+  <button *ngIf="gotAConnectionRequest && connectStatus!=='connected'"
+          type="button" id="confirmBtn"
+          class="btn btn-secondary btn-sm" (click)="confirmConnection()">
+    {{ confirmStatus }}
+  </button>
+  <button *ngIf="connectStatus==='connected'" type="button" id="hangupBtn"
+          class="btn btn-secondary btn-sm" (click)="onHangup()">
+    Hang up
+  </button>
+</div>
