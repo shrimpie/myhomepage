@@ -6,7 +6,9 @@ import { URLSearchParams } from '@angular/http';
 @Injectable()
 export class MessageService {
 
-  private _getUrl = "http://localhost:3000/messages";
+  private baseUrl = "http://localhost:" + (process.env.port || 8080);
+
+  private _getUrl = this.baseUrl + "/messages";
 
   constructor(private _http : Http) { }
 

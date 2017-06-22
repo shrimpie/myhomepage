@@ -8,9 +8,10 @@ export class AuthService {
 
   private authToken: any;
   private user: any;
-  private baseUrl = 'http://localhost:3000/';
+  private baseUrl = 'http://localhost:' + (process.env.port || 8080) + '/';
 
   constructor(private http: Http) {
+    console.log('this.baseUrl: ', this.baseUrl);
   }
 
   registerUser(user) {

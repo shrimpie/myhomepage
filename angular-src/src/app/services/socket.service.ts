@@ -5,7 +5,7 @@ import * as io from 'socket.io-client';
 @Injectable()
 export class SocketService {
 
-  private BASE_URL = 'http://localhost:3000';
+  private BASE_URL = 'http://localhost:' + (process.env.port || 8080) + '/';
   public socket = null;
 
   constructor() {

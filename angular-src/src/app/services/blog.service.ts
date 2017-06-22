@@ -7,10 +7,12 @@ import { Blog } from "../models/blog";
 @Injectable()
 export class BlogService {
 
-  private _getUrl = "http://localhost:3000/blogs";
-  private _postUrl = "http://localhost:3000/blog";
-  private _putUrl = "http://localhost:3000/blog/";
-  private _deleteUrl = "http://localhost:3000/blog/";
+  private baseUrl = "http://localhost:" + (process.env.port || 8080);
+
+  private _getUrl = this.baseUrl +  "/blogs";
+  private _postUrl = this.baseUrl +  "/blog";
+  private _putUrl = this.baseUrl +  "/blog/";
+  private _deleteUrl = this.baseUrl +  "/blog/";
 
 
   constructor(private _http : Http) { }
