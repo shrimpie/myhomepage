@@ -7,8 +7,6 @@ class Socket {
 
   constructor (socket) {
     this.io = socket;
-    console.log('this.io initialized');
-    // console.log('Got this.io: ', this.io);
   }
 
   socketEvents() {
