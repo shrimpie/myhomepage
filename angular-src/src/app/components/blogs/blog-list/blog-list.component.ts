@@ -16,11 +16,9 @@ export class BlogListComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   onSelect(blog : Blog) {
-    console.log(blog.title);
     this.SelectBlog.emit(blog);
   }
 

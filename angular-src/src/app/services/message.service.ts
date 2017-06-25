@@ -6,7 +6,11 @@ import { URLSearchParams } from '@angular/http';
 @Injectable()
 export class MessageService {
 
-  private _getUrl = "messages";
+
+  private port = process.env.PORT || 8080;
+  private _getUrl = 'http://localhost:' + this.port + '/messages';
+  // when deploying to heroku, use below
+  // private _getUrl = "messages";
 
   constructor(private _http : Http) { }
 

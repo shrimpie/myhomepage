@@ -18,10 +18,9 @@ export class VideoContainerComponent implements OnInit {
 
   requestGot : any;
   replyGot : any;
-  msgData : any;
+  msg : any;
 
   audioStatus = 'Turn on Audio';
-
 
   @Input() selectedUser: string;
   @Input() selectedSocketId: string;
@@ -51,12 +50,10 @@ export class VideoContainerComponent implements OnInit {
     video: true
   }
 
-  constructor(private _socketService : SocketService) {
-  }
+  constructor(private _socketService : SocketService) { }
 
   ngOnInit() {
     this._socketService.onSocketConnectionRequest().subscribe(req => {
-      console.log('got a socket connection request: ', req);
       this.gotAConnectionRequest = true;
       this.requestGot = req;
       this.fromSocketId = this.requestGot.fromSocketId;
@@ -64,24 +61,24 @@ export class VideoContainerComponent implements OnInit {
     });
 
     this._socketService.onMessage().subscribe(data => {
-      this.msgData = data;
-      if (this.msgData.msg === 'got user media') {
+      this.msg = data;
+      if (this.msg.msg === 'got user media') {
         this.maybeStart();
-      } else if (this.msgData.msg.type === 'offer') {
+      } else if (this.msg.msg.type === 'offer') {
         if (!this.isInitiator && !this.isStarted) {
           this.maybeStart();
         }
-        this.pc.setRemoteDescription(new RTCSessionDescription(this.msgData.msg));
+        this.pc.setRemoteDescription(new RTCSessionDescription(this.msg.msg));
         this.doAnswer();
-      } else if (this.msgData.msg.type === 'answer' && this.isStarted) {
-        this.pc.setRemoteDescription(new RTCSessionDescription(this.msgData.msg));
-      } else if (this.msgData.msg.type === 'candidate' && this.isStarted) {
+      } else if (this.msg.msg.type === 'answer' && this.isStarted) {
+        this.pc.setRemoteDescription(new RTCSessionDescription(this.msg.msg));
+      } else if (this.msg.msg.type === 'candidate' && this.isStarted) {
         var candidate = new RTCIceCandidate({
-          sdpMLineIndex: this.msgData.msg.label,
-          candidate: this.msgData.msg.candidate
+          sdpMLineIndex: this.msg.msg.label,
+          candidate: this.msg.msg.candidate
         });
         this.pc.addIceCandidate(candidate);
-      } else if (this.msgData.msg === 'bye') {
+      } else if (this.msg.msg === 'bye') {
         this.stop();
       }
     });
@@ -111,22 +108,15 @@ export class VideoContainerComponent implements OnInit {
   }
 
   maybeStart() {
-    console.log('maybeStart():', this.isStarted, this.localStream,
-                                 this.isChannelReady);
     if (!this.isStarted && typeof this.localStream !== 'undefined' &&
         this.isChannelReady) {
-      console.log('>>>>>> creating peer connection');
       if(!this.pc) {
         this.createPeerConnection();
       }
       this.pc.addStream(this.localStream);
       this.isStarted = true;
-      console.log('isInitiator', this.isInitiator);
       if (this.isInitiator) {
         this.doCall();
-      }
-      if(!this.remoteStream) {
-        console.log('Have no remote stream yet');
       }
     }
   }
@@ -160,13 +150,11 @@ export class VideoContainerComponent implements OnInit {
       }
     } catch (e) {
       console.log('Failed to create PeerConnection, exception: ' + e.message);
-      alert('Cannot create RTCPeerConnection object.');
       return;
     }
   }
 
   doCall() {
-    console.log('Sending offer to peer');
     this.pc.createOffer().then((sessionDescription) => {
       this.pc.setLocalDescription(sessionDescription);
       this.sendMessage({
@@ -179,7 +167,6 @@ export class VideoContainerComponent implements OnInit {
   }
 
   doAnswer() {
-    console.log('Sending answer to peer.');
     this.pc.createAnswer().then((sessionDescription) => {
       this.pc.setLocalDescription(sessionDescription);
       this.sendMessage({
@@ -197,17 +184,16 @@ export class VideoContainerComponent implements OnInit {
     } else if(this.connectStatus === 'not connected'){ // try to connect
       // If you try to connect to others, open your own video first.
       this.openVideo(() => {
-        console.log('open video for video connection');
         this.connectStatus = 'connecting';
         // prepare the connect information
         this.toSocketId = this.selectedSocketId;
         this.isInitiator = true;
         this._socketService.connectToSocketId(this.selectedSocketId).subscribe(
           reply => {
-            console.log('connect socket reply:', reply);
+            // console.log('connect socket reply:', reply);
             this.replyGot = reply;
             if(this.replyGot.ready === 'Y') {
-              console.log('She said ready');
+              // console.log('She said ready');
               this.connectStatus = 'connected';
               this.isChannelReady = true;
               this.maybeStart();
@@ -234,7 +220,6 @@ export class VideoContainerComponent implements OnInit {
   }
 
   getConnectBtnText() {
-    // console.log('this.connectStatus: ', this.connectStatus);
     if(this.connectStatus === 'connected') {
       return 'Connected!';
     } else if(this.connectStatus === 'connecting') {
@@ -246,17 +231,15 @@ export class VideoContainerComponent implements OnInit {
 
   openVideo(onLocalMediaReady) {
     if(!this.localStream) {
-
-      navigator.mediaDevices.getUserMedia(this.selfVideoConstraints)
-      .then((stream) => {
-        stream.getAudioTracks()[0].enabled = false;
-        let video = this.myvideo.nativeElement;
-        video.src = window.URL.createObjectURL(stream);
-        console.log('new localStream: ', stream);
-        this.localStream = stream;
-        this.gotLocalStream = true;
-        onLocalMediaReady();
-      });
+      navigator.mediaDevices.getUserMedia(this.selfVideoConstraints).then((
+        stream) => {
+          stream.getAudioTracks()[0].enabled = false;
+          let video = this.myvideo.nativeElement;
+          video.src = window.URL.createObjectURL(stream);
+          this.localStream = stream;
+          this.gotLocalStream = true;
+          onLocalMediaReady();
+        });
     } else {
       onLocalMediaReady();
       console.log('Got this.localStream already');
@@ -279,11 +262,9 @@ export class VideoContainerComponent implements OnInit {
     this.confirmStatus = 'Confirm connection';
     this.isChannelReady = false;
     this.isStarted = false;
-    console.log('video closed');
   }
 
   onHangup() {
-    console.log('trying to hangup here');
     this.closeVideo();
   }
 

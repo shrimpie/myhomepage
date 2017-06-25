@@ -13,11 +13,9 @@ export class ChatListComponent implements OnInit {
   @Input() userId: string;
   @Input() selectedUser: string;
 
-  constructor() {
-  }
+  constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   isSelfMessage(msg) {
     return this.userId === msg.authorId ? true : false;

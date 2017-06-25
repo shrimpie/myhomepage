@@ -43,13 +43,11 @@ class MessageRoute {
     // this.app.get('*', function(req, res) {
     //     res.sendFile(path.join(__dirname, 'public/index.html'));
     // });
-
   }
 
   routesConfig() {
 		this.messageRoutes();
 	}
-
 }
 
 

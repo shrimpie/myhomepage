@@ -5,7 +5,7 @@ import 'rxjs/add/operator/map';
 
 interface BroadcastEvent {
   key: any;
-  data?: any;
+  data?: any; // ? means data is optional
 }
 
 export class Broadcaster {
@@ -20,8 +20,8 @@ export class Broadcaster {
   }
 
   on<T>(key: any): Observable<T> {
-    return this._eventBus.asObservable()
-      .filter(event => event.key === key)
-      .map(event => <T>event.data);
+    return  this._eventBus.asObservable()
+                          .filter(event => event.key === key)
+                          .map(event => <T>event.data);
   }
 }

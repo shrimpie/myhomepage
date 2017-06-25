@@ -3,9 +3,8 @@ import { User } from '../../../models/user';
 import { Message } from '../../../models/message';
 import { SocketService } from '../../../services/socket.service';
 import { MessageService } from '../../../services/message.service';
-import * as $ from 'jquery';
-
 import { Broadcaster } from "../../../services/broadcast.service";
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-chat',
@@ -28,11 +27,8 @@ export class ChatComponent implements OnInit, OnDestroy {
   constructor(private _socketService : SocketService,
               private _messageService : MessageService,
               private _broadcaster: Broadcaster) {
-
-    this._broadcaster.on('testclickevent')
-      .subscribe(message => {
-        this._socketService.logout(this.userId).subscribe(res => {
-        })
+    this._broadcaster.on('logout-from-navbar').subscribe(message => {
+      this._socketService.logout(this.userId).subscribe(res => {})
     });
   }
 
@@ -43,19 +39,14 @@ export class ChatComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.username = JSON.parse(localStorage.getItem('user'))['username'];
     this.userId = JSON.parse(localStorage.getItem('user'))['id'];
-
     this._socketService.connectSocket(this.userId);
-    this._socketService.getChatList(this.userId).subscribe(
-      res => {
-        this.showChatListFromResponse(res);
-      }
-		);
-    this.subscribeForMessages();
+    this._socketService.getChatList(this.userId).subscribe(res => {
+      this.showChatListFromResponse(res);
+    });
   }
   //
   showChatListFromResponse(response) {
-    if (!response.error) {
-      // add newly connected user to chat list
+    if (!response.error) {    // add newly connected user to chat list
       if (response.singleUser) {
         // remove same user if exists in the chat lists of other users.
         if (this.onlineUsers.length > 0) {
@@ -63,7 +54,6 @@ export class ChatComponent implements OnInit, OnDestroy {
             return obj._id !== response.chatList._id;
           });
         }
-        // then add it to chat list
         this.onlineUsers.push(response.chatList);
       } else if (response.userDisconnected) {
         // when user logs out, (a userDisconnected attribute will be set),
@@ -80,12 +70,9 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
   subscribeForMessages() {
-    this.socketCon = this._socketService.receiveMessages().subscribe(
-      response => {
-        if(this.selectedUserId &&
-           this.selectedUserId == response.authorId) {
-          console.log('received a message: ', response);
-          this.messages.push(response);
+    this.socketCon = this._socketService.receiveMessages().subscribe(res => {
+        if(this.selectedUserId && this.selectedUserId == res.authorId) {
+          this.messages.push(res);
           this.scrollToBottom();
         }
     });
@@ -95,7 +82,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     this.selectedUserId = user._id;
     this.selectedSocketId = user.socketId;
     this.selectedUserName = user.username;
-    // get the messages for selected user.
+    this.subscribeForMessages(); // so you can get new messages when chatting
     this._messageService.getMessages({
       authorId: this.userId,
       toAuthorId : this.selectedUserId
@@ -103,11 +90,9 @@ export class ChatComponent implements OnInit, OnDestroy {
       this.messages = res;
       this.scrollToBottom();
     });
-
   }
 
   onNewMessage(message) {
-    console.log('send a new message: ', message);
     this.messages.push(message);
     this.scrollToBottom();
   }
@@ -116,11 +101,8 @@ export class ChatComponent implements OnInit, OnDestroy {
     setTimeout(() => {
       $('#message-container').animate({
         scrollTop: $('#message-container')[0].scrollHeight
-      }, 1000, function() {
-        console.log('Animation complete');
-      });
+      }, 1000, () => {});
     }, 100);
-
   }
 
 }

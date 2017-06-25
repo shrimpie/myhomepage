@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from "../../services/auth.service";
 import { Router } from '@angular/router';
 import { FlashMessagesService } from 'angular2-flash-messages';
-
 import { SocketService } from '../../services/socket.service';
 
 @Component({
@@ -22,8 +21,7 @@ export class LoginComponent implements OnInit {
               private socketService : SocketService) {
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   onLoginSubmit() {
     const user = {
@@ -37,7 +35,6 @@ export class LoginComponent implements OnInit {
           cssClass: 'alert-success',
           timeout: 5000
         });
-        // this.socketService.connectSocket(data.user.id);
         this.router.navigate(['dashboard']);
       } else {
         this.flashMessage.show(data.msg, {

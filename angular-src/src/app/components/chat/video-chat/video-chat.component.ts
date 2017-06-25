@@ -15,31 +15,25 @@ export class VideoChatComponent implements OnInit {
   private selectedUserName = null;
   private userId : string;
   private username : string = 'Default user name';
-
   private onlineUsers : Array<User> = [];
 
   constructor(private _socketService : SocketService,
               private _broadcaster: Broadcaster) {
-    this._broadcaster.on('testclickevent')
-      .subscribe(message => {
-        this._socketService.logout(this.userId).subscribe(res => {
-        })
+    this._broadcaster.on('testclickevent').subscribe(message => {
+      this._socketService.logout(this.userId).subscribe(res => {
+      });
     });
   }
 
-  ngOnDestroy() {
-  }
+  ngOnDestroy() { }
 
   ngOnInit() {
     this.username = JSON.parse(localStorage.getItem('user'))['username'];
     this.userId = JSON.parse(localStorage.getItem('user'))['id'];
-
     this._socketService.connectSocket(this.userId);
-    this._socketService.getChatList(this.userId).subscribe(
-      res => {
-        this.showChatListFromResponse(res);
-      }
-		);
+    this._socketService.getChatList(this.userId).subscribe(res => {
+      this.showChatListFromResponse(res);
+    });
   }
 
   showChatListFromResponse(response) {
@@ -68,7 +62,5 @@ export class VideoChatComponent implements OnInit {
     this.selectedSocketId = user.socketId;
     this.selectedUserName = user.username;
   }
-
-
-
+  
 }

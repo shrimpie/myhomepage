@@ -1,18 +1,14 @@
 <h2 class="page-header">Chat</h2>
-
 <div class="video-container">
-
   <div class="chat-video col-sm-8">
     <app-video-container [selectedUser]="selectedUserName"
                          [selectedSocketId]="selectedSocketId">
     </app-video-container>
   </div>
-
   <div class="online-users col-sm-4">
     <app-online-users [onlineUsers]="onlineUsers"
                       [selectedUserId]="selectedUserId"
                       (SelectUser)="onSelectUser($event)">
     </app-online-users>
   </div>
-
 </div>

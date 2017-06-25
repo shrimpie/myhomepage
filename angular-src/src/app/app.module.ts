@@ -23,20 +23,26 @@ import { Broadcaster } from './services/broadcast.service';
 import { FlashMessagesModule } from 'angular2-flash-messages';
 
 import { AuthGuard } from './guards/auth.guard';
-import { BlogCenterComponent } from './components/blogs/blog-center/blog-center.component';
-import { BlogListComponent } from './components/blogs/blog-list/blog-list.component';
-import { BlogDetailComponent } from './components/blogs/blog-detail/blog-detail.component';
+import { BlogCenterComponent }
+  from './components/blogs/blog-center/blog-center.component';
+import { BlogListComponent }
+  from './components/blogs/blog-list/blog-list.component';
+import { BlogDetailComponent }
+  from './components/blogs/blog-detail/blog-detail.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { ChatComponent } from './components/chat/chat/chat.component';
-import { ChatInputComponent } from './components/chat/chat-input/chat-input.component';
-import { ChatListComponent } from './components/chat/chat-list/chat-list.component';
-import { OnlineUsersComponent } from './components/chat/online-users/online-users.component';
-import { VideoChatComponent } from './components/chat/video-chat/video-chat.component';
-import { VideoContainerComponent } from './components/chat/video-container/video-container.component';
-
+import { ChatInputComponent }
+  from './components/chat/chat-input/chat-input.component';
+import { ChatListComponent }
+  from './components/chat/chat-list/chat-list.component';
+import { OnlineUsersComponent }
+  from './components/chat/online-users/online-users.component';
+import { VideoChatComponent }
+  from './components/chat/video-chat/video-chat.component';
+import { VideoContainerComponent }
+  from './components/chat/video-container/video-container.component';
 
 import { AngularDraggableModule } from 'angular2-draggable';
-
 
 const appRoutes: Routes =  [
   { path:'', component: HomeComponent },

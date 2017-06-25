@@ -76,7 +76,6 @@ class UserRoute {
     }), (req, res) => {
       res.json({ user: req.user });
     });
-
   }
 
   routesConfig() {
@@ -84,6 +83,5 @@ class UserRoute {
 	}
 
 }
-
 
 module.exports = UserRoute;

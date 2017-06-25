@@ -1,5 +1,4 @@
 // require('dotenv').config();
-
 // module.exports = {
 //   database: 'mongodb://' +
 //             process.env.MONGODB_USER + ':' +
@@ -8,8 +7,8 @@
 //   secret: 'somepassword'
 // }
 
-
 module.exports = {
-  database: 'mongodb://nodeuser:tnTYlESuHhL3K6sB@ds027335.mlab.com:27335/nodesample',
+  database: 'mongodb://' + 'nodeuser:tnTYlESuHhL3K6sB' +
+            '@ds027335.mlab.com:27335/nodesample',
   secret: 'somesecret'
 }

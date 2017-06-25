@@ -19,7 +19,7 @@ module.exports.getUserById = function(id, callback) {
 }
 
 module.exports.getUserByUserName = function(username, callback) {
-  const query = { username: username };
+  const query = { username : username };
   User.findOne(query, callback);
 }
 
@@ -42,7 +42,6 @@ module.exports.comparePassword = function(candidatePassword, hash, callback) {
 
 module.exports.addSocketId = function(data) {
   User.findById(data.id, function(err, user) {
-    // console.log('user:', user);
     user.socketId = data.socketId;
     user.online = data.online;
     user.save(function(err, updatedUser) {

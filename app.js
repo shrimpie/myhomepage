@@ -20,7 +20,8 @@ class Server {
 
   constructor () {
     this.port = process.env.PORT || 8080;
-    // this.host = '0.0.0.0';
+    this.host = 'localhost';
+    // this.host is not used when deploying to heroku
     this.app = express();
     this.http = http.Server(this.app);
     this.socket = socketio(this.http);
@@ -57,9 +58,13 @@ class Server {
     this.appConfig();
     this.includeRoutes();
     this.connectDatabase();
-    this.http.listen(this.port, () => {
-        // console.log(`Listening on http://${this.host}:${this.port}`);
+    this.http.listen(this.port, this.host, () => {
+        console.log(`Listening on http://${this.host}:${this.port}`);
     });
+    // use below when deploying to heroku
+    // this.http.listen(this.port, () => {
+    //     console.log(`Listening on port ${this.port}`);
+    // });
   }
 
 }

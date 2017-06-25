@@ -4,15 +4,10 @@ const Message = require('../models/message');
 
 class Helper {
 
-	constructor() {
-	}
+	constructor() { }
 
 	getUserInfo(userId, callback) {
-		User.findOne({
-			_id : userId
-		}, (err, result) => {
-			callback(err,result);
-		});
+		User.findOne({ _id : userId }, (err, result) => { callback(err,result); });
 	}
 
 	getChatList(useeSocketId, callback) {
@@ -55,7 +50,7 @@ class Helper {
 		}, (err, result) => {
       callback(err, result);
 		});
-	} // getMessages
+	}
 
 	logout(userId, callback) {
 		const data = { $set : { online : 'N' } };

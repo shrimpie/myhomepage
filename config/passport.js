@@ -17,7 +17,6 @@ module.exports = function(passport) {
   // secretOrKey is a REQUIRED string or buffer containing the secret
   // (symmetric) or PEM-encoded public key (asymmetric) for verifying the
   // token's signature.
-
   passport.use(new JwtStrategy(opts, (jwtPayload, done) => {
     // 1. jwt_payload is an object literal containing the decoded JWT payload.
     // 2. done is a passport error first callback accepting arguments

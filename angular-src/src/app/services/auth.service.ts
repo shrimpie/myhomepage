@@ -9,31 +9,38 @@ export class AuthService {
   private authToken: any;
   private user: any;
 
-  constructor(private http: Http) {
+  private port = process.env.PORT || 8080;
+  private BASE_URL = 'http://localhost:' + this.port + '/';
+  // when deploying to heroku, use below
+  // private BASE_URL = '';
+
+  constructor(private http: Http) { }
+
+  getHeaders() {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return headers;
   }
 
   registerUser(user) {
-    let headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    return this.http.post('users/register', user, {
+    let headers = this.getHeaders();
+    return this.http.post(this.BASE_URL + 'users/register', user, {
       headers: headers
     }).map(res => res.json());
   }
 
   authenticateUser(user) {
-    let headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    return this.http.post('users/authenticate', user, {
+    let headers = this.getHeaders();
+    return this.http.post(this.BASE_URL + 'users/authenticate', user, {
       headers: headers
     }).map(res => res.json());
   }
 
   getProfile() {
-    let headers = new Headers();
+    let headers = this.getHeaders();
     this.loadToken();
     headers.append('Authorization', this.authToken);
-    headers.append('Content-Type', 'application/json');
-    return this.http.get('users/profile', {
+    return this.http.get(this.BASE_URL + 'users/profile', {
       headers: headers
     }).map(res => res.json());
   }

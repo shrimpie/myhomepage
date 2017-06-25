@@ -1,5 +1,4 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-// import { Message } from '../../../models/message';
 import { SocketService } from '../../../services/socket.service';
 import { FlashMessagesService } from 'angular2-flash-messages';
 
@@ -17,19 +16,15 @@ export class ChatInputComponent implements OnInit {
   @Input() authorId : string;
   @Input() toAuthorId : string;
   @Input() toSocketId : string;
-
-  @Output()
-  NewMessage = new EventEmitter();
+  @Output() NewMessage = new EventEmitter();
 
   constructor(private _socketService : SocketService,
               private _flashMessage : FlashMessagesService) {
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   sendMessage() {
-
     if(!this.toAuthorId) {
       this.messageContent = '';
       this._flashMessage.show('Select a user to chat with', {

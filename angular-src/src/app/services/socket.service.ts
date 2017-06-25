@@ -5,20 +5,22 @@ import * as io from 'socket.io-client';
 @Injectable()
 export class SocketService {
 
-  private BASE_URL = '/';
+  // private BASE_URL = '/';
+  // when deploying to heroku, use above.
+
+  private port = process.env.PORT || 8080;
+  private BASE_URL = 'http://localhost:' + this.port + '/';
   public socket = null;
 
-  constructor() {
-  }
+  constructor() { }
 
   connectSocket(userId : string) {
     this.socket = io(this.BASE_URL, { query : `userId=${userId}` });
   }
 
-  getSelfSocketId() {
-    this.socket.emit('self-socket-id');
+  getObservable(eventName) {
     let observable = new Observable(observer => {
-      this.socket.on('self-socket-id-response', (data) => {
+      this.socket.on(eventName, (data) => {
         observer.next(data);
       });
       return () => { this.socket.disconnect();};
@@ -26,15 +28,14 @@ export class SocketService {
     return observable;
   }
 
+  getSelfSocketId() {
+    this.socket.emit('self-socket-id');
+    return this.getObservable('self-socket-id-response');
+  }
+
   getChatList(userId : string) : any {
     this.socket.emit('chat-list' , { userId : userId });
-    let observable = new Observable(observer => {
-      this.socket.on('chat-list-response', (data) => {
-        observer.next(data);
-      });
-      return () => { this.socket.disconnect();};
-    });
-    return observable;
+    return this.getObservable('chat-list-response');
   }
 
   sendMessage(message : any) : void {
@@ -42,51 +43,27 @@ export class SocketService {
   }
 
   receiveMessages() : any {
-    let observable = new Observable(observer => {
-      this.socket.on('add-message-response', (data) => {
-        observer.next(data);
-      });
-      return () => { this.socket.disconnect(); };
-    });
-    return observable;
+    return this.getObservable('add-message-response');
   }
 
   logout(userId) : any {
-    if(!this.socket) {
-    }
     this.socket.emit('logout', userId);
-    let observable = new Observable(observer => {
-      this.socket.on('logout-response', (data) => {
-        observer.next(data);
-      });
-      return () => { this.socket.disconnect(); };
-    });
-    return observable;
+    return this.getObservable('logout-response');
   }
 
 
   /// below are for video connection usage
   sendMessageForVideoConnection(data) {
-    // console.log('Client sending message: ', data.msg);
     this.socket.emit('message', data);
   }
 
   connectToSocketId(sid) {
     console.log('trying to connect to socket id: ', sid);
-    this.socket.emit('connect-socket-request', {
-      toSocketId: sid
-    });
-    let observable = new Observable(observer => {
-      this.socket.on('connect-socket-reply', (data) => {
-        observer.next(data);
-      });
-      return () => { this.socket.disconnect(); };
-    });
-    return observable;
+    this.socket.emit('connect-socket-request', { toSocketId: sid });
+    return this.getObservable('connect-socket-reply');
   }
 
   confirmConnectionToSocketId(tsid) {
-    console.log('Confirm connection to socket id: ', tsid);
     this.socket.emit('connect-socket-answer', {
       ready: 'Y',
       toSocketId: tsid
@@ -94,23 +71,11 @@ export class SocketService {
   }
 
   onSocketConnectionRequest() {
-    let observable = new Observable(observer => {
-      this.socket.on('connect-socket-relay', (data) => {
-        observer.next(data);
-      });
-      return () => { this.socket.disconnect(); };
-    });
-    return observable;
+    return this.getObservable('connect-socket-relay');
   }
 
   onMessage() {
-    let observable = new Observable(observer => {
-      this.socket.on('message', (data) => {
-        observer.next(data);
-      });
-      return () => { this.socket.disconnect(); };
-    });
-    return observable;
+    return this.getObservable('message');
   }
 
 }

@@ -12,7 +12,7 @@ class Socket {
   socketEvents() {
 
     this.io.on('connection', (socket) => {
-      console.log('A user is connected');
+      // console.log('A user is connected');
 
       socket.on('self-socket-id', () => {
         socket.emit('self-socket-id-response', socket.id);
@@ -46,26 +46,26 @@ class Socket {
 		  }); // chat-list
 
       socket.on('disconnect', () => {
-        console.log('The user is disconnected');
         socket.broadcast.emit('chat-list-response', {
 					error : false,
 					userDisconnected : true,
 					socketId: socket.id
 				});
-
       });
 
       // Handles when clients add new messages
       socket.on('add-message', (data) => {
         if (data.content === '') {
 					this.io.to(socket.id)
-              .emit('add-message-response', 'Message cant be empty');
+                 .emit('add-message-response', 'Message cant be empty');
+                 // message checking should be done in the client, right?
+                 // same with below two checkings.
 				} else if (data.authorId === '') {
 					this.io.to(socket.id)
-              .emit('add-message-response', 'Unexpected error, Login again.');
+                 .emit('add-message-response', 'Unexpected error, Login again');
 				} else if (data.toAuthorId === '') {
 					this.io.to(socket.id)
-              .emit('add-message-response', 'Select a user to chat.');
+                 .emit('add-message-response', 'Select a user to chat');
 				} else {
 					let toSocketId = data.toSocketId;
 					delete data.toSocketId;
@@ -79,10 +79,10 @@ class Socket {
       socket.on('logout', (userId) => {
         helper.logout(userId, (error, result) => {
           this.io.to(socket.id).emit('logout-response', {
-            error: false
+            error : false
           });
           socket.broadcast.emit('chat-list-response',{
-            error: false,
+            error : false,
             userDisconnected : true,
             socketId : socket.id
           });
@@ -91,8 +91,6 @@ class Socket {
 
       ///////// below are for video chat usage ///////
       socket.on('connect-socket-request', (data) => {
-        console.log('got connect socket event:', data);
-        console.log('sending the request to the target socket: ', data.toSocketId);
         if(this.io.sockets.connected[data.toSocketId]) {
           this.io.sockets.connected[data.toSocketId].emit(
             'connect-socket-relay', {
@@ -104,7 +102,6 @@ class Socket {
       });
 
       socket.on('connect-socket-answer', (data) => {
-        // console.log('server is sending backing the reply to the initiator');
         if(this.io.sockets.connected[data.toSocketId]) {
           this.io.sockets.connected[data.toSocketId].emit(
            'connect-socket-reply', {
@@ -130,7 +127,6 @@ class Socket {
     // a socketId written to the database, so I can remember which user uses
     // which socket, thus private chat.
     this.io.use(function(socket, next) {
-      // console.log('socket.js | client socket connected');
 			let userId = socket.request._query['userId'];
     	let userSocketId = socket.id;
     	const data = {

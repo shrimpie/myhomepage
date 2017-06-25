@@ -7,20 +7,17 @@ import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 })
 export class BlogDetailComponent implements OnInit {
 
-  @Input() blog: any;
-
   private editTitle: boolean = false;
   private editFeaturedImgUrl : boolean = false;
   private editContent: boolean = false;
 
-
+  @Input() blog: any;
   @Output() updateBlogEvent = new EventEmitter();
   @Output() deleteBlogEvent = new EventEmitter();
 
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   ngOnChanges() {
     this.editTitle = false;
@@ -59,7 +56,6 @@ export class BlogDetailComponent implements OnInit {
 
   deleteBlog() {
     if(confirm("Are you sure to delete this blog?")) {
-      // console.log("This blog is about to be deleted");
       this.deleteBlogEvent.emit(this.blog);
     }
   }

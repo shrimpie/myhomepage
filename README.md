@@ -4,9 +4,10 @@ A place to show what I can do.
 
 1. Items I want to present
 * Blog
-* Little projects
+* Chat (text)
+* Video chat
 * Usefull notes
-* ..
+* ...
 
 2. Technologies intended to use
 * Node.js (backend)

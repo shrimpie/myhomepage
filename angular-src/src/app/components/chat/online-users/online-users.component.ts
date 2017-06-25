@@ -17,8 +17,7 @@ export class OnlineUsersComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   onSelectUser(user) {
     this.SelectUser.emit(user);
